@@ -1,35 +1,40 @@
 #include <stdio.h>
+
 int main() {
-    int n, key, low, high, mid, c = 0, found = 0;
-    printf("Enter number of employees: ");
+    int n, key, j, c = 0;
+    
+    printf("Enter number of students: ");
     scanf("%d", &n);
+    
     int a[n];
-    printf("Enter employee IDs in ascending order:\n");
+    printf("Enter student marks:\n");
     for(int i = 0; i < n; i++) {
         scanf("%d", &a[i]);
     }
-    printf("Enter ID to search: ");
-    scanf("%d", &key);
-    low = 0;
-    high = n - 1;
-    while(low <= high) {
-        c++;
-        mid = (low + high) / 2;
-        if(a[mid] == key) {
-            printf("Employee ID found at position: %d\n", mid + 1);
-            found = 1;
-            break;
+    
+    for(int i = 1; i < n; i++) {
+        key = a[i];
+        j = i - 1;
+        
+        while(j >= 0 && a[j] > key) {
+            a[j + 1] = a[j];
+            c++;
+            j--;
         }
-        else if(a[mid] < key) {
-            low = mid + 1;
+        a[j + 1] = key;
+        
+        printf("Pass %d: ", i);
+        for(int k = 0; k < n; k++) {
+            printf("%d ", a[k]);
         }
-        else {
-            high = mid - 1;
-        }
+        printf("\n");
     }
-    if(!found) {
-        printf("Employee ID %d is absent from the records.\n", key);
+    
+    printf("Final sorted marks: ");
+    for(int i = 0; i < n; i++) {
+        printf("%d ", a[i]);
     }
-    printf("Total carisons: %d\n", c);
+    
+    printf("\nTotal comparisions: %d", c);
     return 0;
 }
